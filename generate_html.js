@@ -1,24 +1,4 @@
-const fs = require('fs');
-
-const projects = [
-    { title: "MixinMenu", desc: "Platform untuk restoran yang ingin menampilkan menu secara online agar memudahkan pelanggan untuk melihat menu.", tech: ["Laravel", "Vue.js"], link: "https://mixinmenu.com", abbr: "MM" },
-    { title: "Katalog Mixinlabs", desc: "Platform katalog produk untuk toko dapat menampilkan produk dan meningkatkan promosi digital.", tech: ["Laravel", "Vue.js"], link: "https://katalog.mixinlabs.com", abbr: "KM" },
-    { title: "Mixinlabs Affiliate", desc: "Website untuk menampilkan dan mengatur sistem afiliasi dari penjualan produk.", tech: ["Laravel", "Vue.js", "Tailwind"], link: "https://affiliate.mixinlabs.com", abbr: "AF" },
-    { title: "Demo Sewa Lapangan", desc: "Website demo untuk sistem penyewaan lapangan olahraga, lengkap dengan fitur transaksi.", tech: ["Laravel", "Vue.js"], link: "https://demo-lapangan.demomixin.my.id", abbr: "SL" },
-    { title: "FitGym AI", desc: "Website terintegrasi API Gemini untuk membuat jadwal workout, pemenuhan nutrisi, dan chatbot.", tech: ["ReactJS", "Gemini API"], link: "https://fitgym-ai.vercel.app/", abbr: "FG" },
-    { title: "S-Class (Binus)", desc: "Landing page program Computer Science Binus University.", tech: ["HTML", "Tailwind"], link: "https://s-classbinus.vercel.app/", abbr: "SC" },
-    { title: "Sistem Penjadwalan", desc: "Aplikasi web dengan multi-role user untuk mengatur dan mengelola jadwal appointment pendeta.", tech: ["Laravel", "Blade"], abbr: "SP" },
-    { title: "Software House PM", desc: "Platform project management untuk mengelola project software house dan kolaborasi tim.", tech: ["Laravel", "Next.js"], abbr: "PM" },
-    { title: "Aplikasi Kasir", desc: "Desktop application untuk sistem kasir yang memudahkan transaksi penjualan dan inventory.", tech: ["C# .NET", "SQL Server"], abbr: "AK" },
-    { title: "Backend Ecommerce", desc: "Backend untuk website ecommerce dengan fitur lengkap produk, cart, dan transaksi.", tech: ["NestJS"], abbr: "BE" },
-    { title: "Dashboard Komik", desc: "Dashboard untuk mengelola data website komik, termasuk katalog, chapter, dan author.", tech: ["Laravel", "Vue.js"], abbr: "DK" },
-    { title: "BSLC CMS", desc: "Website dashboard organisasi BSLC untuk mengelola data landing page, elearning, dan nindyamaya.", tech: ["Laravel", "Vue.js"], link: "https://cms.bslc.or.id", abbr: "BC" },
-    { title: "BSLC Elearning", desc: "Website platform belajar yang menyediakan modul, video recording, dan forum berbagi.", tech: ["Vue.js", "Tailwind"], link: "https://bslc-elearning.vercel.app", abbr: "EL" },
-    { title: "BSLC Landing Page", desc: "Website landing page organisasi BSLC untuk memperkenalkan organisasi dan program.", tech: ["Vue.js", "Tailwind"], link: "https://bslc-landingpage.vercel.app", abbr: "BL" },
-    { title: "BSLC Nindyamaya", desc: "Website dashboard mentoring untuk memfasilitasi interaksi tutor dan tutee program mentoring.", tech: ["Vue.js", "Tailwind"], link: "https://bslc-nindyamaya.vercel.app", abbr: "NM" },
-];
-
-const html = `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
@@ -27,21 +7,33 @@ const html = `<!DOCTYPE html>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        sans: ['"Inter"', 'sans-serif'],
+                        display: ['"Outfit"', 'sans-serif'],
+                        mono: ['"Fira Code"', 'monospace'],
                     },
                     colors: {
-                        background: '#0a0a0a',
-                        surface: '#121212',
-                        surface2: '#1a1a1a',
-                        border: '#27272a',
-                        muted: '#a1a1aa',
-                        primary: '#ffffff',
+                        dark: '#0f172a',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'marquee': 'marquee 30s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        }
                     }
                 }
             }
@@ -49,211 +41,322 @@ const html = `<!DOCTYPE html>
     </script>
     <style>
         body {
-            background-color: theme('colors.background');
-            color: theme('colors.primary');
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
         }
         ::selection {
-            background: rgba(255, 255, 255, 0.9);
-            color: #000;
+            background: rgba(56, 189, 248, 0.3);
+            color: #fff;
         }
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #0a0a0a;
+            background: #0f172a;
         }
         ::-webkit-scrollbar-thumb {
-            background: #27272a;
+            background: #334155;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #3f3f46;
+            background: #475569;
         }
         
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(30px) scale(0.98);
             transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .reveal.active {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
-        
-        .noise {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none;
-            z-index: 50;
-            opacity: 0.035;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        .glass-card:hover {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .glass-nav {
-            background: rgba(10, 10, 10, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .bento-card {
-            background: #121212;
-            border: 1px solid #27272a;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-        }
-        .bento-card:hover {
-            border-color: #3f3f46;
-            background: #151515;
-        }
-
         .text-gradient {
-            background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
+            background: linear-gradient(to right, #38bdf8, #34d399, #fbbf24);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 4s linear infinite;
+        }
+        
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
         }
         
         .nav-link {
-            color: #a1a1aa;
+            position: relative;
+            color: #94a3b8;
             transition: color 0.3s;
         }
         .nav-link:hover, .nav-link.active {
-            color: #ffffff;
+            color: #f8fafc;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #38bdf8;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        .pattern-grid {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
 
-        .grid-bg {
-            background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            mask-image: radial-gradient(circle at center, black, transparent 80%);
-            -webkit-mask-image: radial-gradient(circle at center, black, transparent 80%);
+        /* AURORA BACKGROUND CSS */
+        :root {
+            --aurora-1: #3b82f6; 
+            --aurora-2: #10b981; 
+            --aurora-3: #06b6d4; 
+            --aurora-4: #3b82f6; 
+            --aurora-5: #0284c7; 
+            
+            --dark-gradient: repeating-linear-gradient(100deg, #0f172a 0%, #0f172a 7%, transparent 10%, transparent 12%, #0f172a 16%);
+            --aurora: repeating-linear-gradient(100deg, var(--aurora-1) 10%, var(--aurora-2) 15%, var(--aurora-3) 20%, var(--aurora-4) 25%, var(--aurora-5) 30%);
+        }
+
+        .aurora-container {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            z-index: 0;
+            background-color: #0f172a;
+        }
+
+        .aurora-bg {
+            position: absolute;
+            inset: -10px;
+            opacity: 0.35; 
+            background-image: var(--dark-gradient), var(--aurora);
+            background-size: 300%, 200%;
+            background-position: 50% 50%, 50% 50%;
+            filter: blur(15px);
+            pointer-events: none;
+            will-change: transform;
+            mask-image: radial-gradient(ellipse at 100% 0%, black 10%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at 100% 0%, black 10%, transparent 70%);
+        }
+
+        .aurora-bg::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: var(--dark-gradient), var(--aurora);
+            background-size: 200%, 100%;
+            background-attachment: fixed;
+            mix-blend-mode: difference;
+            animation: aurora 60s linear infinite;
         }
     </style>
 </head>
-<body class="antialiased">
-    <div class="noise"></div>
+<body class="antialiased min-h-screen relative">
+    
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+        <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
+    </div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-40 glass-nav transition-all duration-300">
+    <nav class="fixed top-0 w-full z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#home" class="text-xl font-bold tracking-tighter flex items-center gap-2">
-                <span class="w-8 h-8 rounded-lg bg-white text-black flex items-center justify-center text-sm">WL</span>
+            <a href="#home" class="font-display text-2xl font-bold tracking-tighter flex items-center gap-2">
+                <span class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-emerald-500 text-white flex items-center justify-center text-sm shadow-lg shadow-blue-500/20">WL</span>
             </a>
             <div class="hidden md:flex items-center gap-8 text-sm font-medium">
-                <a href="#about" class="nav-link">About</a>
-                <a href="#skills" class="nav-link">Skills</a>
-                <a href="#projects" class="nav-link">Projects</a>
-                <a href="#mixinlabs" class="nav-link">Mixinlabs</a>
+                <a href="#about" class="nav-link font-display tracking-wide">About</a>
+                <a href="#skills" class="nav-link font-display tracking-wide">Skills</a>
+                <a href="#projects" class="nav-link font-display tracking-wide">Projects</a>
+                <a href="#mixinlabs" class="nav-link font-display tracking-wide">Mixinlabs</a>
+                <a href="#blog" class="nav-link font-display tracking-wide">Blog</a>
             </div>
-            <a href="#contact" class="hidden md:inline-flex items-center justify-center px-5 py-2 text-sm font-medium text-black bg-white rounded-lg hover:bg-gray-200 transition-colors">
+            <a href="#contact" class="hidden md:inline-flex items-center justify-center px-6 py-2.5 text-sm font-medium text-white bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl transition-all duration-300 backdrop-blur-md hover:scale-105">
                 Let's Talk
             </a>
             
-            <!-- Mobile Menu Button -->
-            <button class="md:hidden text-white p-2" id="mobile-menu-btn">
+            <button class="md:hidden text-white p-2" id="mobile-menu-btn" aria-label="Toggle Menu">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
             </button>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-surface border-b border-border px-6 py-4 space-y-4">
-            <a href="#about" class="block text-muted hover:text-white">About</a>
-            <a href="#skills" class="block text-muted hover:text-white">Skills</a>
-            <a href="#projects" class="block text-muted hover:text-white">Projects</a>
-            <a href="#mixinlabs" class="block text-muted hover:text-white">Mixinlabs</a>
-            <a href="#contact" class="block text-white">Contact</a>
+        <div id="mobile-menu" class="hidden md:hidden glass-nav border-b border-white/10 px-6 py-4 space-y-4 absolute w-full left-0 top-20">
+            <a href="#about" class="block text-slate-300 hover:text-white font-display">About</a>
+            <a href="#skills" class="block text-slate-300 hover:text-white font-display">Skills</a>
+            <a href="#projects" class="block text-slate-300 hover:text-white font-display">Projects</a>
+            <a href="#mixinlabs" class="block text-slate-300 hover:text-white font-display">Mixinlabs</a>
+            <a href="#blog" class="block text-slate-300 hover:text-white font-display">Blog</a>
+            <a href="#contact" class="block text-white font-display">Contact</a>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="min-h-screen flex items-center justify-center pt-20 px-6 relative overflow-hidden">
-        <div class="absolute inset-0 z-0 flex items-center justify-center">
-            <div class="absolute w-full h-full grid-bg"></div>
-            <div class="w-[600px] h-[600px] bg-white/5 rounded-full blur-[120px]"></div>
+    <section id="home" class="min-h-screen flex items-center justify-center pt-20 px-6 relative">
+        <div class="aurora-container">
+            <div class="aurora-bg"></div>
         </div>
         
-        <div class="max-w-3xl mx-auto text-center z-10 reveal">
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-surface text-xs text-muted mb-8 font-medium">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <div class="max-w-4xl mx-auto text-center z-10 reveal mt-10">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border border-white/10 text-xs text-slate-300 mb-8 font-medium shadow-xl shadow-cyan-500/10 animate-float">
+                <span class="relative flex h-2.5 w-2.5">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-500"></span>
+                </span>
                 Available for new opportunities
             </div>
-            <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-tight">
-                Hi, I'm <span class="text-gradient">Wiko Laygunata</span>
+            
+            <h1 class="font-display text-5xl md:text-7xl font-bold tracking-tight mb-6 leading-tight">
+                Crafting <br class="md:hidden"> 
+                <span class="text-gradient">Digital</span> <br>Experiences
             </h1>
-            <p class="text-lg md:text-xl text-muted font-light max-w-2xl mx-auto mb-6">
-                Computer Science Student & Full Stack Developer building robust, scalable digital solutions.
-            </p>
-            <p class="text-sm text-muted/50 mb-12 font-mono">
-                // Saya manusia biasa, makan nasi 🍚
-            </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#projects" class="w-full sm:w-auto px-8 py-3.5 rounded-xl font-medium bg-white text-black hover:bg-gray-200 transition-colors">
+            
+            <!-- Terminal Block (Feature 1) -->
+            <div class="mt-8 mb-10 max-w-lg mx-auto glass-card rounded-xl overflow-hidden border border-slate-700/50 shadow-2xl text-left hidden md:block">
+                <div class="bg-slate-900/80 px-4 py-3 flex items-center gap-2 border-b border-slate-700/50">
+                    <div class="w-3 h-3 rounded-full bg-rose-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-amber-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-emerald-500/80"></div>
+                    <div class="text-xs text-slate-400 font-mono ml-2">guest@wikolaygunata:~</div>
+                </div>
+                <div class="p-5 font-mono text-sm">
+                    <div class="flex gap-2 items-center">
+                        <span class="text-emerald-400 font-bold">➜</span>
+                        <span class="text-sky-400 font-bold">~</span>
+                        <span class="text-white" id="typewriter-text"></span>
+                        <span class="animate-pulse bg-white w-2 h-4 inline-block ml-1"></span>
+                    </div>
+                    <div id="typewriter-output" class="text-slate-300 mt-3 hidden leading-relaxed">
+                        <span class="text-blue-400">const</span> <span class="text-amber-300">developer</span> = {<br>
+                        &nbsp;&nbsp;name: <span class="text-emerald-300">'Wiko Laygunata'</span>,<br>
+                        &nbsp;&nbsp;role: <span class="text-emerald-300">'Full Stack Engineer'</span>,<br>
+                        &nbsp;&nbsp;passion: <span class="text-emerald-300">'Building scalable solutions'</span><br>
+                        };<br>
+                        <span class="text-slate-500 mt-2 block">// Manusia biasa, butuh ngopi ☕</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-5 md:mt-0 mt-8">
+                <a href="#projects" class="w-full sm:w-auto px-8 py-4 rounded-xl font-medium bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:opacity-90 transition-all shadow-lg shadow-blue-500/25 hover:scale-105 flex items-center justify-center gap-2">
                     View My Work
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                 </a>
-                <a href="#contact" class="w-full sm:w-auto px-8 py-3.5 rounded-xl font-medium border border-border hover:bg-surface transition-colors">
+                <a href="#contact" class="w-full sm:w-auto px-8 py-4 rounded-xl font-medium glass-card hover:bg-white/10 transition-all hover:scale-105 flex items-center justify-center">
                     Contact Me
                 </a>
             </div>
         </div>
     </section>
 
+    <!-- Tech Stack Marquee (Feature 5) -->
+    <div class="w-full bg-slate-900/40 border-y border-white/5 py-8 overflow-hidden flex relative z-10">
+        <!-- Fade masks -->
+        <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-slate-900 to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-slate-900 to-transparent z-10 pointer-events-none"></div>
+        
+        <div class="flex animate-marquee hover:[animation-play-state:paused] w-max">
+            <div class="font-display font-bold text-slate-500/50 text-3xl md:text-5xl px-8 flex-shrink-0 tracking-widest uppercase">
+                Laravel • Vue.js • React • Next.js • Tailwind CSS • C# .NET • MySQL • Kotlin • Flutter • NestJS • Node.js • Laravel • Vue.js • React • Next.js • Tailwind CSS • C# .NET • MySQL • Kotlin • Flutter • NestJS • Node.js • Laravel • Vue.js • React • Next.js • Tailwind CSS • C# .NET • MySQL • Kotlin • Flutter • NestJS • Node.js • 
+            </div>
+        </div>
+    </div>
+
     <!-- About Section -->
-    <section id="about" class="py-24 px-6 max-w-7xl mx-auto">
-        <h2 class="text-3xl font-bold mb-12 reveal tracking-tight">About Me</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <section id="about" class="py-32 px-6 max-w-7xl mx-auto relative z-10">
+        <div class="flex items-center gap-4 mb-16 reveal">
+            <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight text-white">About Me</h2>
+            <div class="h-[1px] flex-grow bg-gradient-to-r from-white/20 to-transparent"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
             <!-- Bio -->
-            <div class="bento-card p-8 md:col-span-2 reveal">
-                <h3 class="text-xl font-semibold mb-6">Who I Am</h3>
-                <div class="space-y-4 text-muted leading-relaxed font-light">
+            <div class="glass-card p-8 md:p-10 rounded-3xl md:col-span-8 reveal flex flex-col justify-center">
+                <h3 class="font-display text-2xl font-semibold mb-6 text-white flex items-center gap-3">
+                    <span class="p-2 bg-blue-500/20 rounded-lg text-blue-400"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></span>
+                    Who I Am
+                </h3>
+                <div class="space-y-5 text-slate-300 leading-relaxed font-light text-lg">
                     <p>
-                        Halo! Saya Wiko Laygunata, mahasiswa Computer Science di Binus University Kemanggisan (2024-2028). Saya berasal dari Pontianak dan memiliki passion yang kuat di bidang software development.
+                        Halo! Saya Wiko Laygunata, mahasiswa Computer Science di <span class="text-white font-medium">Binus University Kemanggisan</span> (2024-2028). Saya berasal dari Pontianak dan memiliki passion yang kuat di bidang software development.
                     </p>
                     <p>
-                        Saya berpengalaman sebagai Full Stack Developer dengan fokus pada web development. Saya senang membangun solusi digital yang dapat memecahkan masalah nyata dan memberikan value yang jelas kepada pengguna.
+                        Saya berpengalaman sebagai Full Stack Developer dengan fokus pada web development. Saya percaya desain yang indah dipadukan dengan performa yang cepat dapat menciptakan value yang tak terlupakan bagi pengguna.
                     </p>
                 </div>
             </div>
             
             <!-- Achievement -->
-            <div class="bento-card p-8 bg-gradient-to-br from-surface to-surface2 flex flex-col justify-center reveal">
-                <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-6">
-                    <span class="text-xl">🏆</span>
+            <div class="glass-card p-8 rounded-3xl md:col-span-4 flex flex-col justify-center items-center text-center reveal relative overflow-hidden group">
+                <div class="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-yellow-400/20 to-amber-600/20 border border-yellow-500/30 flex items-center justify-center mb-6 relative z-10 shadow-[0_0_30px_rgba(234,179,8,0.2)] group-hover:scale-110 transition-transform duration-500">
+                    <span class="text-3xl">🏆</span>
                 </div>
-                <h3 class="text-5xl font-bold mb-3 tracking-tighter">1st</h3>
-                <p class="text-muted text-sm font-medium">Juara 1 LKS Nasional</p>
-                <p class="text-muted/60 text-xs mt-1">IT Software Solutions for Business (2022)</p>
+                <h3 class="font-display text-6xl font-black mb-3 text-transparent bg-clip-text bg-gradient-to-b from-white to-white/60 relative z-10">1st</h3>
+                <p class="text-white font-medium text-lg relative z-10">Juara Nasional</p>
+                <p class="text-slate-400 text-sm mt-2 relative z-10">IT Software Solutions for Business (LKS 2022)</p>
             </div>
 
             <!-- Experience -->
-            <div class="bento-card p-8 md:col-span-1 reveal">
-                <h3 class="text-xl font-semibold mb-8">Experience</h3>
-                <div class="relative pl-5 border-l border-border space-y-8">
+            <div class="glass-card p-8 md:p-10 rounded-3xl md:col-span-5 reveal relative overflow-hidden group">
+                <h3 class="font-display text-2xl font-semibold mb-8 text-white flex items-center gap-3">
+                    <span class="p-2 bg-amber-500/20 rounded-lg text-amber-400"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></span>
+                    Experience
+                </h3>
+                <div class="relative pl-6 border-l border-amber-500/30 space-y-8">
                     <div class="relative">
-                        <div class="absolute -left-[25px] top-1.5 w-2.5 h-2.5 rounded-full bg-white ring-4 ring-background"></div>
-                        <h4 class="font-medium text-white mb-1">Full Stack Developer</h4>
-                        <p class="text-sm text-muted mb-2">Grha Digital Pontianak</p>
-                        <p class="text-xs text-muted/60 font-mono">Mar - Jun 2024</p>
+                        <div class="absolute -left-[29px] top-1.5 w-3 h-3 rounded-full bg-amber-500 ring-4 ring-[#0f172a]"></div>
+                        <h4 class="font-medium text-lg text-white mb-1">Full Stack Developer</h4>
+                        <p class="text-sm text-slate-300 mb-2">Grha Digital Pontianak</p>
+                        <span class="inline-block px-3 py-1 bg-white/5 border border-white/10 rounded-md text-xs text-slate-400 font-mono">Mar - Jun 2024</span>
                     </div>
                 </div>
             </div>
 
             <!-- Education -->
-            <div class="bento-card p-8 md:col-span-2 reveal">
-                <h3 class="text-xl font-semibold mb-8">Education</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                    <div class="relative pl-5 border-l border-border">
-                        <div class="absolute -left-[25px] top-1.5 w-2.5 h-2.5 rounded-full bg-white ring-4 ring-background"></div>
-                        <h4 class="font-medium text-white mb-1">Binus University</h4>
-                        <p class="text-sm text-muted mb-2">Computer Science</p>
-                        <p class="text-xs text-muted/60 font-mono">2024 - 2028</p>
+            <div class="glass-card p-8 md:p-10 rounded-3xl md:col-span-7 reveal relative overflow-hidden group">
+                <h3 class="font-display text-2xl font-semibold mb-8 text-white flex items-center gap-3">
+                    <span class="p-2 bg-cyan-500/20 rounded-lg text-cyan-400"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"/></svg></span>
+                    Education
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 relative z-10">
+                    <div class="relative pl-6 border-l border-cyan-500/30">
+                        <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-cyan-500 ring-4 ring-[#0f172a]"></div>
+                        <h4 class="font-medium text-lg text-white mb-1">Binus University</h4>
+                        <p class="text-sm text-slate-300 mb-2">Computer Science</p>
+                        <span class="inline-block px-3 py-1 bg-white/5 border border-white/10 rounded-md text-xs text-slate-400 font-mono">2024 - 2028</span>
                     </div>
-                    <div class="relative pl-5 border-l border-border">
-                        <div class="absolute -left-[25px] top-1.5 w-2.5 h-2.5 rounded-full bg-border ring-4 ring-background"></div>
-                        <h4 class="font-medium text-white mb-1">SMK Immanuel Pontianak</h4>
-                        <p class="text-sm text-muted mb-2">Software Engineering</p>
-                        <p class="text-xs text-muted/60 font-mono">Graduated 2024</p>
+                    <div class="relative pl-6 border-l border-white/10">
+                        <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-white/30 ring-4 ring-[#0f172a]"></div>
+                        <h4 class="font-medium text-lg text-white mb-1">SMK Immanuel Pontianak</h4>
+                        <p class="text-sm text-slate-300 mb-2">Software Engineering</p>
+                        <span class="inline-block px-3 py-1 bg-white/5 border border-white/10 rounded-md text-xs text-slate-400 font-mono">Graduated 2024</span>
                     </div>
                 </div>
             </div>
@@ -261,93 +364,418 @@ const html = `<!DOCTYPE html>
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-24 px-6 max-w-7xl mx-auto border-t border-border">
-        <div class="flex flex-col md:flex-row gap-16">
-            <div class="md:w-1/3 reveal">
-                <h2 class="text-3xl font-bold mb-6 tracking-tight">Tech Stack</h2>
-                <p class="text-muted font-light leading-relaxed">Teknologi dan alat yang saya gunakan untuk membangun aplikasi yang scalable dan modern.</p>
-            </div>
-            <div class="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-10">
-                <div class="reveal">
-                    <h3 class="text-xs font-semibold text-muted uppercase tracking-widest mb-5">Web Development</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1.5 bg-surface2 border border-border rounded-lg text-sm">Laravel</span>
-                        <span class="px-3 py-1.5 bg-surface2 border border-border rounded-lg text-sm">Vue.js</span>
-                        <span class="px-3 py-1.5 bg-surface2 border border-border rounded-lg text-sm">Next.js</span>
-                        <span class="px-3 py-1.5 bg-surface2 border border-border rounded-lg text-sm">React</span>
-                        <span class="px-3 py-1.5 bg-surface2 border border-border rounded-lg text-sm">NestJS</span>
-                        <span class="px-3 py-1.5 bg-surface2 border border-border rounded-lg text-sm">MySQL</span>
-                        <span class="px-3 py-1.5 bg-surface2 border border-border rounded-lg text-sm">Tailwind CSS</span>
-                    </div>
+    <section id="skills" class="py-32 px-6 max-w-7xl mx-auto relative z-10">
+        <div class="flex items-center gap-4 mb-16 reveal">
+            <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight text-white">Tech Stack</h2>
+            <div class="h-[1px] flex-grow bg-gradient-to-r from-white/20 to-transparent"></div>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div class="glass-card p-8 rounded-3xl reveal hover:-translate-y-2 transition-transform duration-300">
+                <div class="w-12 h-12 rounded-xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center mb-6 text-blue-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
                 </div>
-                <div class="reveal" style="transition-delay: 100ms">
-                    <h3 class="text-xs font-semibold text-muted uppercase tracking-widest mb-5">Desktop & Mobile</h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1.5 bg-surface2 border border-border rounded-lg text-sm">C# .NET</span>
-                        <span class="px-3 py-1.5 bg-surface2 border border-border rounded-lg text-sm">SQL Server</span>
-                        <span class="px-3 py-1.5 bg-surface2 border border-border rounded-lg text-sm">Kotlin</span>
-                        <span class="px-3 py-1.5 bg-surface2 border border-border rounded-lg text-sm">Android</span>
-                    </div>
+                <h3 class="font-display text-xl font-semibold text-white mb-6">Web Development</h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm hover:bg-white/10 transition-colors cursor-default">Laravel</span>
+                    <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm hover:bg-white/10 transition-colors cursor-default">Vue.js</span>
+                    <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm hover:bg-white/10 transition-colors cursor-default">Next.js</span>
+                    <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm hover:bg-white/10 transition-colors cursor-default">React</span>
+                    <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm hover:bg-white/10 transition-colors cursor-default">NestJS</span>
+                    <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm hover:bg-white/10 transition-colors cursor-default">Tailwind CSS</span>
+                </div>
+            </div>
+            
+            <div class="glass-card p-8 rounded-3xl reveal hover:-translate-y-2 transition-transform duration-300" style="transition-delay: 100ms">
+                <div class="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center mb-6 text-amber-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </div>
+                <h3 class="font-display text-xl font-semibold text-white mb-6">Desktop & Database</h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm hover:bg-white/10 transition-colors cursor-default">C# .NET</span>
+                    <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm hover:bg-white/10 transition-colors cursor-default">MySQL</span>
+                    <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm hover:bg-white/10 transition-colors cursor-default">SQL Server</span>
+                </div>
+            </div>
+            
+            <div class="glass-card p-8 rounded-3xl reveal hover:-translate-y-2 transition-transform duration-300" style="transition-delay: 200ms">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center mb-6 text-emerald-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                </div>
+                <h3 class="font-display text-xl font-semibold text-white mb-6">Mobile App</h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm hover:bg-white/10 transition-colors cursor-default">Kotlin</span>
+                    <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm hover:bg-white/10 transition-colors cursor-default">Flutter</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-24 px-6 max-w-7xl mx-auto border-t border-border">
-        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 reveal">
-            <div>
-                <h2 class="text-3xl font-bold tracking-tight mb-4">Selected Work</h2>
-                <p class="text-muted font-light">Beberapa project yang telah saya kerjakan.</p>
-            </div>
+    <section id="projects" class="py-32 px-6 max-w-7xl mx-auto relative z-10">
+        <div class="flex items-center gap-4 mb-16 reveal">
+            <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight text-white">Selected Work</h2>
+            <div class="h-[1px] flex-grow bg-gradient-to-r from-white/20 to-transparent"></div>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            ${projects.map((p, i) => `
-            <div class="bento-card group flex flex-col reveal" style="transition-delay: ${(i % 3) * 100}ms">
-                <!-- Sleek Placeholder instead of slop image -->
-                <div class="h-48 bg-surface2 border-b border-border rounded-t-[20px] flex items-center justify-center relative overflow-hidden">
-                    <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white to-transparent mix-blend-overlay"></div>
-                    <h4 class="text-7xl font-black text-white/5 tracking-tighter select-none group-hover:scale-110 group-hover:text-white/10 transition-all duration-500">${p.abbr}</h4>
+
+            <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 0ms">
+                <div class="h-56 bg-gradient-to-br from-blue-500/20 to-sky-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
+                    <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">MM</h4>
                 </div>
-                <div class="p-6 flex-grow flex flex-col">
-                    <h3 class="text-xl font-semibold mb-3 group-hover:text-white transition-colors">${p.title}</h3>
-                    <p class="text-muted text-sm font-light flex-grow mb-6 leading-relaxed">${p.desc}</p>
-                    <div class="flex items-center justify-between mt-auto pt-4 border-t border-border/50">
+                <div class="p-8 flex-grow flex flex-col">
+                    <h3 class="font-display text-2xl font-semibold mb-3 text-white group-hover:text-blue-400 transition-colors">MixinMenu</h3>
+                    <p class="text-slate-400 text-sm font-light flex-grow mb-8 leading-relaxed">Platform untuk restoran yang ingin menampilkan menu secara online agar memudahkan pelanggan untuk melihat menu.</p>
+                    <div class="flex items-center justify-between mt-auto">
                         <div class="flex flex-wrap gap-2">
-                            ${p.tech.map(t => `<span class="text-xs font-medium text-muted/80 bg-white/5 px-2 py-1 rounded">${t}</span>`).join('')}
+                            <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Laravel</span><span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Vue.js</span>
                         </div>
-                        ${p.link ? `
-                        <a href="${p.link}" target="_blank" class="text-white bg-white/10 p-2 rounded-full hover:bg-white hover:text-black transition-all">
+                        
+                        <a href="https://mixinmenu.com" target="_blank" class="text-slate-300 bg-white/5 border border-white/10 p-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300 group-hover:scale-110" aria-label="Visit MixinMenu">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </a>
-                        ` : ''}
+        
                     </div>
                 </div>
             </div>
-            `).join('')}
+    
+            <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 100ms">
+                <div class="h-56 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
+                    <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">KM</h4>
+                </div>
+                <div class="p-8 flex-grow flex flex-col">
+                    <h3 class="font-display text-2xl font-semibold mb-3 text-white group-hover:text-blue-400 transition-colors">Katalog Mixinlabs</h3>
+                    <p class="text-slate-400 text-sm font-light flex-grow mb-8 leading-relaxed">Platform katalog produk untuk toko dapat menampilkan produk dan meningkatkan promosi digital.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Laravel</span><span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Vue.js</span>
+                        </div>
+                        
+                        <a href="https://katalog.mixinlabs.com" target="_blank" class="text-slate-300 bg-white/5 border border-white/10 p-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300 group-hover:scale-110" aria-label="Visit Katalog Mixinlabs">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </a>
+        
+                    </div>
+                </div>
+            </div>
+    
+            <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 200ms">
+                <div class="h-56 bg-gradient-to-br from-orange-500/20 to-red-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
+                    <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">AF</h4>
+                </div>
+                <div class="p-8 flex-grow flex flex-col">
+                    <h3 class="font-display text-2xl font-semibold mb-3 text-white group-hover:text-blue-400 transition-colors">Mixinlabs Affiliate</h3>
+                    <p class="text-slate-400 text-sm font-light flex-grow mb-8 leading-relaxed">Website untuk menampilkan dan mengatur sistem afiliasi dari penjualan produk.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Laravel</span><span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Vue.js</span><span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Tailwind</span>
+                        </div>
+                        
+                        <a href="https://affiliate.mixinlabs.com" target="_blank" class="text-slate-300 bg-white/5 border border-white/10 p-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300 group-hover:scale-110" aria-label="Visit Mixinlabs Affiliate">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </a>
+        
+                    </div>
+                </div>
+            </div>
+    
+            <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 0ms">
+                <div class="h-56 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
+                    <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">SL</h4>
+                </div>
+                <div class="p-8 flex-grow flex flex-col">
+                    <h3 class="font-display text-2xl font-semibold mb-3 text-white group-hover:text-blue-400 transition-colors">Demo Sewa Lapangan</h3>
+                    <p class="text-slate-400 text-sm font-light flex-grow mb-8 leading-relaxed">Website demo untuk sistem penyewaan lapangan olahraga, lengkap dengan fitur transaksi.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Laravel</span><span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Vue.js</span>
+                        </div>
+                        
+                        <a href="https://demo-lapangan.demomixin.my.id" target="_blank" class="text-slate-300 bg-white/5 border border-white/10 p-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300 group-hover:scale-110" aria-label="Visit Demo Sewa Lapangan">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </a>
+        
+                    </div>
+                </div>
+            </div>
+    
+            <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 100ms">
+                <div class="h-56 bg-gradient-to-br from-amber-500/20 to-orange-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
+                    <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">FG</h4>
+                </div>
+                <div class="p-8 flex-grow flex flex-col">
+                    <h3 class="font-display text-2xl font-semibold mb-3 text-white group-hover:text-blue-400 transition-colors">FitGym AI</h3>
+                    <p class="text-slate-400 text-sm font-light flex-grow mb-8 leading-relaxed">Website terintegrasi API Gemini untuk membuat jadwal workout, pemenuhan nutrisi, dan chatbot.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">ReactJS</span><span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Gemini API</span>
+                        </div>
+                        
+                        <a href="https://fitgym-ai.vercel.app/" target="_blank" class="text-slate-300 bg-white/5 border border-white/10 p-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300 group-hover:scale-110" aria-label="Visit FitGym AI">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </a>
+        
+                    </div>
+                </div>
+            </div>
+    
+            <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 200ms">
+                <div class="h-56 bg-gradient-to-br from-yellow-500/20 to-amber-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
+                    <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">SC</h4>
+                </div>
+                <div class="p-8 flex-grow flex flex-col">
+                    <h3 class="font-display text-2xl font-semibold mb-3 text-white group-hover:text-blue-400 transition-colors">S-Class (Binus)</h3>
+                    <p class="text-slate-400 text-sm font-light flex-grow mb-8 leading-relaxed">Landing page program Computer Science Binus University.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">HTML</span><span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Tailwind</span>
+                        </div>
+                        
+                        <a href="https://s-classbinus.vercel.app/" target="_blank" class="text-slate-300 bg-white/5 border border-white/10 p-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300 group-hover:scale-110" aria-label="Visit S-Class (Binus)">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </a>
+        
+                    </div>
+                </div>
+            </div>
+    
+            <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 0ms">
+                <div class="h-56 bg-gradient-to-br from-teal-500/20 to-cyan-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
+                    <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">SP</h4>
+                </div>
+                <div class="p-8 flex-grow flex flex-col">
+                    <h3 class="font-display text-2xl font-semibold mb-3 text-white group-hover:text-blue-400 transition-colors">Sistem Penjadwalan</h3>
+                    <p class="text-slate-400 text-sm font-light flex-grow mb-8 leading-relaxed">Aplikasi web dengan multi-role user untuk mengatur dan mengelola jadwal appointment pendeta.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Laravel</span><span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Blade</span>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+    
+            <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 100ms">
+                <div class="h-56 bg-gradient-to-br from-lime-500/20 to-emerald-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
+                    <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">PM</h4>
+                </div>
+                <div class="p-8 flex-grow flex flex-col">
+                    <h3 class="font-display text-2xl font-semibold mb-3 text-white group-hover:text-blue-400 transition-colors">Software House PM</h3>
+                    <p class="text-slate-400 text-sm font-light flex-grow mb-8 leading-relaxed">Platform project management untuk mengelola project software house dan kolaborasi tim.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Laravel</span><span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Next.js</span>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+    
+            <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 200ms">
+                <div class="h-56 bg-gradient-to-br from-sky-500/20 to-blue-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
+                    <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">AK</h4>
+                </div>
+                <div class="p-8 flex-grow flex flex-col">
+                    <h3 class="font-display text-2xl font-semibold mb-3 text-white group-hover:text-blue-400 transition-colors">Aplikasi Kasir</h3>
+                    <p class="text-slate-400 text-sm font-light flex-grow mb-8 leading-relaxed">Desktop application untuk sistem kasir yang memudahkan transaksi penjualan dan inventory.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">C# .NET</span><span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">SQL Server</span>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+    
+            <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 0ms">
+                <div class="h-56 bg-gradient-to-br from-green-500/20 to-emerald-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
+                    <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">BE</h4>
+                </div>
+                <div class="p-8 flex-grow flex flex-col">
+                    <h3 class="font-display text-2xl font-semibold mb-3 text-white group-hover:text-blue-400 transition-colors">Backend Ecommerce</h3>
+                    <p class="text-slate-400 text-sm font-light flex-grow mb-8 leading-relaxed">Backend untuk website ecommerce dengan fitur lengkap produk, cart, dan transaksi.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">NestJS</span>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+    
+            <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 100ms">
+                <div class="h-56 bg-gradient-to-br from-rose-500/20 to-red-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
+                    <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">DK</h4>
+                </div>
+                <div class="p-8 flex-grow flex flex-col">
+                    <h3 class="font-display text-2xl font-semibold mb-3 text-white group-hover:text-blue-400 transition-colors">Dashboard Komik</h3>
+                    <p class="text-slate-400 text-sm font-light flex-grow mb-8 leading-relaxed">Dashboard untuk mengelola data website komik, termasuk katalog, chapter, dan author.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Laravel</span><span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Vue.js</span>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+    
+            <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 200ms">
+                <div class="h-56 bg-gradient-to-br from-orange-400/20 to-orange-600/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
+                    <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">BC</h4>
+                </div>
+                <div class="p-8 flex-grow flex flex-col">
+                    <h3 class="font-display text-2xl font-semibold mb-3 text-white group-hover:text-blue-400 transition-colors">BSLC CMS</h3>
+                    <p class="text-slate-400 text-sm font-light flex-grow mb-8 leading-relaxed">Website dashboard organisasi BSLC untuk mengelola data landing page, elearning, dan nindyamaya.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Laravel</span><span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Vue.js</span>
+                        </div>
+                        
+                        <a href="https://cms.bslc.or.id" target="_blank" class="text-slate-300 bg-white/5 border border-white/10 p-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300 group-hover:scale-110" aria-label="Visit BSLC CMS">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </a>
+        
+                    </div>
+                </div>
+            </div>
+    
+            <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 0ms">
+                <div class="h-56 bg-gradient-to-br from-blue-400/20 to-cyan-600/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
+                    <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">EL</h4>
+                </div>
+                <div class="p-8 flex-grow flex flex-col">
+                    <h3 class="font-display text-2xl font-semibold mb-3 text-white group-hover:text-blue-400 transition-colors">BSLC Elearning</h3>
+                    <p class="text-slate-400 text-sm font-light flex-grow mb-8 leading-relaxed">Website platform belajar yang menyediakan modul, video recording, dan forum berbagi.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Vue.js</span><span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Tailwind</span>
+                        </div>
+                        
+                        <a href="https://bslc-elearning.vercel.app" target="_blank" class="text-slate-300 bg-white/5 border border-white/10 p-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300 group-hover:scale-110" aria-label="Visit BSLC Elearning">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </a>
+        
+                    </div>
+                </div>
+            </div>
+    
+            <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 100ms">
+                <div class="h-56 bg-gradient-to-br from-teal-400/20 to-emerald-600/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
+                    <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">BL</h4>
+                </div>
+                <div class="p-8 flex-grow flex flex-col">
+                    <h3 class="font-display text-2xl font-semibold mb-3 text-white group-hover:text-blue-400 transition-colors">BSLC Landing Page</h3>
+                    <p class="text-slate-400 text-sm font-light flex-grow mb-8 leading-relaxed">Website landing page organisasi BSLC untuk memperkenalkan organisasi dan program.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Vue.js</span><span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Tailwind</span>
+                        </div>
+                        
+                        <a href="https://bslc-landingpage.vercel.app" target="_blank" class="text-slate-300 bg-white/5 border border-white/10 p-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300 group-hover:scale-110" aria-label="Visit BSLC Landing Page">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </a>
+        
+                    </div>
+                </div>
+            </div>
+    
+            <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 200ms">
+                <div class="h-56 bg-gradient-to-br from-rose-400/20 to-orange-600/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
+                    <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
+                    <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">NM</h4>
+                </div>
+                <div class="p-8 flex-grow flex flex-col">
+                    <h3 class="font-display text-2xl font-semibold mb-3 text-white group-hover:text-blue-400 transition-colors">BSLC Nindyamaya</h3>
+                    <p class="text-slate-400 text-sm font-light flex-grow mb-8 leading-relaxed">Website dashboard mentoring untuk memfasilitasi interaksi tutor dan tutee program mentoring.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Vue.js</span><span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Tailwind</span>
+                        </div>
+                        
+                        <a href="https://bslc-nindyamaya.vercel.app" target="_blank" class="text-slate-300 bg-white/5 border border-white/10 p-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300 group-hover:scale-110" aria-label="Visit BSLC Nindyamaya">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                        </a>
+        
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    </section>
+
+    <!-- Medium Articles Section (Feature 4) -->
+    <section id="blog" class="py-32 px-6 max-w-7xl mx-auto relative z-10">
+        <div class="flex items-center gap-4 mb-16 reveal">
+            <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight text-white">Latest Writings</h2>
+            <div class="h-[1px] flex-grow bg-gradient-to-r from-white/20 to-transparent"></div>
+        </div>
+        
+        <div id="medium-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Loading Skeleton -->
+            <div class="glass-card h-80 rounded-3xl animate-pulse"></div>
+            <div class="glass-card h-80 rounded-3xl animate-pulse hidden md:block"></div>
+            <div class="glass-card h-80 rounded-3xl animate-pulse hidden md:block"></div>
+        </div>
+        <div class="mt-12 text-center reveal">
+            <a href="https://wikolaygunata.medium.com/" target="_blank" class="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors bg-white/5 border border-white/10 px-6 py-3 rounded-xl hover:bg-white/10">
+                Read more on Medium <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
         </div>
     </section>
 
     <!-- Mixinlabs Section -->
-    <section id="mixinlabs" class="py-24 px-6 max-w-7xl mx-auto border-t border-border">
-        <div class="bento-card p-8 md:p-14 relative overflow-hidden reveal">
-            <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-white/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+    <section id="mixinlabs" class="py-32 px-6 max-w-7xl mx-auto relative z-10">
+        <div class="glass-card p-8 md:p-14 rounded-3xl relative overflow-hidden reveal border-blue-500/20 shadow-[0_0_50px_rgba(59,130,246,0.1)] hover:border-blue-500/40 transition-colors duration-500">
+            <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-20"></div>
             
             <div class="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
                 <div>
-                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-surface text-xs font-medium mb-8">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-medium mb-8 text-blue-300">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                        </span>
                         Co-Founder & Full Stack Developer
                     </div>
-                    <h2 class="text-4xl md:text-5xl font-bold mb-6 tracking-tight">Mixinlabs</h2>
-                    <p class="text-muted font-light leading-relaxed mb-8">
-                        Software house yang berfokus pada inovasi dan solusi digital yang berdampak nyata. Kami percaya bahwa transformasi teknologi menjadi kunci utama bagi bisnis untuk tetap kompetitif di era modern.
+                    <h2 class="font-display text-5xl md:text-6xl font-bold mb-6 tracking-tight text-white">Mixinlabs</h2>
+                    <p class="text-slate-300 text-lg font-light leading-relaxed mb-10">
+                        Software house yang berfokus pada inovasi dan solusi digital yang berdampak nyata. Kami merancang sistem, web, dan aplikasi untuk membantu bisnis bertransformasi di era modern.
                     </p>
                     <div class="flex flex-wrap gap-4">
-                        <a href="https://mixinlabs.com" target="_blank" class="bg-white text-black px-6 py-3 rounded-xl text-sm font-medium hover:bg-gray-200 transition-colors">
+                        <a href="https://mixinlabs.com" target="_blank" class="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-8 py-3.5 rounded-xl font-medium hover:opacity-90 transition-all shadow-lg shadow-blue-500/20 hover:scale-105">
                             Visit Mixinlabs
                         </a>
-                        <a href="https://binus.ac.id/entrepreneur/2025/02/13/mixinlabs-digital-computer-science/" target="_blank" class="border border-border px-6 py-3 rounded-xl text-sm font-medium hover:bg-surface transition-colors flex items-center gap-2">
+                        <a href="https://binus.ac.id/entrepreneur/2025/02/13/mixinlabs-digital-computer-science/" target="_blank" class="bg-white/5 border border-white/10 text-white px-8 py-3.5 rounded-xl font-medium hover:bg-white/10 transition-all flex items-center gap-2 hover:scale-105">
                             <span>Featured on BINUS</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                         </a>
@@ -355,33 +783,33 @@ const html = `<!DOCTYPE html>
                 </div>
                 
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-surface border border-border p-6 rounded-2xl hover:bg-surface2 transition-colors">
-                        <div class="w-12 h-12 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center mb-5">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
+                    <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-2xl hover:bg-white/10 transition-all duration-300 group hover:-translate-y-1">
+                        <div class="w-12 h-12 bg-blue-500/20 border border-blue-500/30 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform text-blue-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
                         </div>
-                        <h4 class="font-medium mb-2">Web Development</h4>
-                        <p class="text-sm text-muted font-light">Aplikasi web modern & responsif</p>
+                        <h4 class="font-display font-medium text-white mb-2 text-lg">Web Dev</h4>
+                        <p class="text-sm text-slate-400 font-light">Aplikasi modern & responsif</p>
                     </div>
-                    <div class="bg-surface border border-border p-6 rounded-2xl hover:bg-surface2 transition-colors">
-                        <div class="w-12 h-12 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center mb-5">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                    <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-2xl hover:bg-white/10 transition-all duration-300 group hover:-translate-y-1">
+                        <div class="w-12 h-12 bg-amber-500/20 border border-amber-500/30 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform text-amber-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
                         </div>
-                        <h4 class="font-medium mb-2">Mobile Apps</h4>
-                        <p class="text-sm text-muted font-light">Aplikasi iOS & Android</p>
+                        <h4 class="font-display font-medium text-white mb-2 text-lg">Mobile Apps</h4>
+                        <p class="text-sm text-slate-400 font-light">Aplikasi Android & iOS</p>
                     </div>
-                    <div class="bg-surface border border-border p-6 rounded-2xl hover:bg-surface2 transition-colors">
-                        <div class="w-12 h-12 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center mb-5">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-2xl hover:bg-white/10 transition-all duration-300 group hover:-translate-y-1">
+                        <div class="w-12 h-12 bg-cyan-500/20 border border-cyan-500/30 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform text-cyan-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                         </div>
-                        <h4 class="font-medium mb-2">Automation</h4>
-                        <p class="text-sm text-muted font-light">Otomasi proses bisnis</p>
+                        <h4 class="font-display font-medium text-white mb-2 text-lg">Automation</h4>
+                        <p class="text-sm text-slate-400 font-light">Otomasi proses bisnis</p>
                     </div>
-                    <div class="bg-surface border border-border p-6 rounded-2xl hover:bg-surface2 transition-colors">
-                        <div class="w-12 h-12 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center mb-5">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
+                    <div class="bg-white/5 backdrop-blur-sm border border-white/10 p-6 rounded-2xl hover:bg-white/10 transition-all duration-300 group hover:-translate-y-1">
+                        <div class="w-12 h-12 bg-emerald-500/20 border border-emerald-500/30 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform text-emerald-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg>
                         </div>
-                        <h4 class="font-medium mb-2">Consultation</h4>
-                        <p class="text-sm text-muted font-light">Konsultasi digitalisasi</p>
+                        <h4 class="font-display font-medium text-white mb-2 text-lg">Consultation</h4>
+                        <p class="text-sm text-slate-400 font-light">Konsultasi digitalisasi</p>
                     </div>
                 </div>
             </div>
@@ -389,43 +817,45 @@ const html = `<!DOCTYPE html>
     </section>
 
     <!-- Footer / Contact -->
-    <footer id="contact" class="border-t border-border bg-surface2/50 mt-24">
+    <footer id="contact" class="border-t border-white/10 bg-[#0f172a] mt-32 relative z-10 backdrop-blur-xl">
         <div class="max-w-7xl mx-auto px-6 py-24">
             <div class="grid md:grid-cols-2 gap-16 mb-24 reveal">
                 <div>
-                    <h2 class="text-5xl md:text-6xl font-bold mb-8 tracking-tight leading-tight">Let's build<br><span class="text-muted">something great.</span></h2>
-                    <p class="text-muted font-light max-w-sm mb-10 text-lg">
+                    <h2 class="font-display text-5xl md:text-7xl font-bold mb-8 tracking-tight leading-tight text-white">
+                        Let's build<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600">something great.</span>
+                    </h2>
+                    <p class="text-slate-400 font-light max-w-sm mb-12 text-lg">
                         Terbuka untuk project freelance, internship, atau sekadar diskusi tentang teknologi.
                     </p>
-                    <a href="mailto:wikolaygunata@gmail.com" class="inline-flex items-center gap-3 bg-white text-black px-8 py-4 rounded-xl font-medium hover:bg-gray-200 transition-colors">
+                    <a href="mailto:wikolaygunata@gmail.com" class="inline-flex items-center gap-3 bg-white text-black px-8 py-4 rounded-xl font-semibold hover:bg-gray-200 transition-all hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.2)]">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                        wikolaygunata@gmail.com
+                        Say Hello
                     </a>
                 </div>
                 
                 <div class="flex md:justify-end md:items-end">
                     <div class="space-y-6 text-right w-full md:w-auto">
-                        <h4 class="font-semibold mb-6 text-xs uppercase tracking-widest text-muted text-left md:text-right">Social Profiles</h4>
-                        <a href="https://www.linkedin.com/in/wikolaygunata" target="_blank" class="block text-2xl font-medium text-muted hover:text-white transition-colors flex justify-between md:justify-end gap-8 items-center border-b border-border/50 pb-4">
-                            LinkedIn <span class="text-sm">↗</span>
+                        <h4 class="font-semibold mb-8 text-xs uppercase tracking-widest text-slate-500 text-left md:text-right">Social Profiles</h4>
+                        <a href="https://www.linkedin.com/in/wikolaygunata" target="_blank" class="block font-display text-3xl font-medium text-slate-300 hover:text-white hover:-translate-y-1 transition-all flex justify-between md:justify-end gap-12 items-center border-b border-white/10 pb-5 group">
+                            LinkedIn <span class="text-sm opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all">↗</span>
                         </a>
-                        <a href="https://github.com/wikolaygunata" target="_blank" class="block text-2xl font-medium text-muted hover:text-white transition-colors flex justify-between md:justify-end gap-8 items-center border-b border-border/50 pb-4">
-                            GitHub <span class="text-sm">↗</span>
+                        <a href="https://github.com/wikolaygunata" target="_blank" class="block font-display text-3xl font-medium text-slate-300 hover:text-white hover:-translate-y-1 transition-all flex justify-between md:justify-end gap-12 items-center border-b border-white/10 pb-5 group">
+                            GitHub <span class="text-sm opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all">↗</span>
                         </a>
-                        <a href="https://instagram.com/wikolaygunataa" target="_blank" class="block text-2xl font-medium text-muted hover:text-white transition-colors flex justify-between md:justify-end gap-8 items-center border-b border-border/50 pb-4">
-                            Instagram <span class="text-sm">↗</span>
+                        <a href="https://instagram.com/wikolaygunataa" target="_blank" class="block font-display text-3xl font-medium text-slate-300 hover:text-white hover:-translate-y-1 transition-all flex justify-between md:justify-end gap-12 items-center border-b border-white/10 pb-5 group">
+                            Instagram <span class="text-sm opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all">↗</span>
                         </a>
-                        <a href="https://wikolaygunata.medium.com/" target="_blank" class="block text-2xl font-medium text-muted hover:text-white transition-colors flex justify-between md:justify-end gap-8 items-center border-b border-border/50 pb-4">
-                            Medium <span class="text-sm">↗</span>
+                        <a href="https://wikolaygunata.medium.com/" target="_blank" class="block font-display text-3xl font-medium text-slate-300 hover:text-white hover:-translate-y-1 transition-all flex justify-between md:justify-end gap-12 items-center border-b border-white/10 pb-5 group">
+                            Medium <span class="text-sm opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all">↗</span>
                         </a>
                     </div>
                 </div>
             </div>
             
-            <div class="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-border text-sm text-muted font-light">
+            <div class="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-white/10 text-sm text-slate-500 font-light">
                 <p>&copy; <span id="year"></span> Wiko Laygunata. All rights reserved.</p>
                 <div class="mt-4 md:mt-0">
-                    <a href="#home" class="hover:text-white transition-colors flex items-center gap-2">
+                    <a href="#home" class="hover:text-white transition-colors flex items-center gap-2 px-4 py-2 bg-white/5 rounded-lg border border-white/10">
                         Back to top
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
                     </a>
@@ -437,21 +867,82 @@ const html = `<!DOCTYPE html>
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // Mobile menu toggle
+        // Terminal Typewriter Effect
+        const termText = "cat profile.json";
+        let termIdx = 0;
+        const typeWriter = () => {
+            if (termIdx < termText.length) {
+                document.getElementById("typewriter-text").innerHTML += termText.charAt(termIdx);
+                termIdx++;
+                setTimeout(typeWriter, 100);
+            } else {
+                setTimeout(() => {
+                    document.getElementById("typewriter-output").classList.remove('hidden');
+                }, 400);
+            }
+        };
+        setTimeout(typeWriter, 1000);
+
+        // Fetch Medium Articles
+        fetch('https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@wikolaygunata')
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById('medium-container');
+                container.innerHTML = '';
+                
+                if (data.status === 'ok' && data.items.length > 0) {
+                    const articles = data.items.slice(0, 3);
+                    articles.forEach((item, index) => {
+                        const delay = index * 100;
+                        const pubDate = new Date(item.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                        
+                        // Extract first image from description if thumbnail is empty
+                        let img = item.thumbnail;
+                        if (!img) {
+                            const match = item.description.match(/<img[^>]+src="([^">]+)"/);
+                            img = match ? match[1] : 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+                        }
+                        
+                        container.innerHTML += `
+                            <a href="${item.link}" target="_blank" class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal active hover:-translate-y-2 transition-all duration-500" style="transition-delay: ${delay}ms">
+                                <div class="h-48 bg-slate-800 overflow-hidden relative border-b border-white/5">
+                                    <img src="${img}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-80"></div>
+                                </div>
+                                <div class="p-6 flex-grow flex flex-col relative bg-slate-900/50">
+                                    <div class="text-xs text-blue-400 mb-3 font-mono border border-blue-400/20 bg-blue-400/10 w-fit px-2 py-1 rounded">${pubDate}</div>
+                                    <h3 class="font-display text-xl font-semibold mb-3 text-white group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">${item.title}</h3>
+                                    <div class="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
+                                        <span class="text-sm font-medium text-slate-300 group-hover:text-white transition-colors">Read Article</span>
+                                        <svg class="w-5 h-5 text-slate-500 group-hover:text-white transition-all group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                                    </div>
+                                </div>
+                            </a>
+                        `;
+                    });
+                } else {
+                    container.innerHTML = '<div class="col-span-3 text-center text-slate-500 py-10">Belum ada artikel terbaru.</div>';
+                }
+            })
+            .catch(err => {
+                const container = document.getElementById('medium-container');
+                container.innerHTML = '<div class="col-span-3 text-center text-slate-500 py-10">Gagal memuat artikel Medium saat ini.</div>';
+            });
+
+        // Mobile Menu
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
         btn.addEventListener('click', () => {
             menu.classList.toggle('hidden');
         });
         
-        // Close menu on link click
         menu.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 menu.classList.add('hidden');
             });
         });
 
-        // Reveal animations
+        // Scroll Reveal
         const revealElements = document.querySelectorAll('.reveal');
         const revealOptions = {
             threshold: 0.1,
@@ -461,7 +952,6 @@ const html = `<!DOCTYPE html>
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
-                    // Stop observing once revealed
                     observer.unobserve(entry.target);
                 }
             });
@@ -471,7 +961,7 @@ const html = `<!DOCTYPE html>
             revealObserver.observe(el);
         });
 
-        // Nav active state
+        // Scroll Spy
         const sections = document.querySelectorAll('section');
         const navLinks = document.querySelectorAll('.nav-link');
         
@@ -492,7 +982,4 @@ const html = `<!DOCTYPE html>
         });
     </script>
 </body>
-</html>`;
-
-fs.writeFileSync('c:\\laragon\\www\\mixinlab\\porto-pribadi\\index.html', html);
-console.log('HTML written successfully.');
+</html>
