@@ -126,7 +126,112 @@
             background-size: 200% auto;
             animation: shine 4s linear infinite;
         }
-        
+
+        .project-image-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem;
+            height: 3rem;
+            padding: 0;
+            color: #f8fafc;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 9999px;
+            transition: background 0.25s ease, transform 0.25s ease, color 0.25s ease;
+        }
+
+        .project-image-toggle:hover {
+            background: rgba(255, 255, 255, 0.16);
+        }
+
+        .project-image-toggle svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            transition: transform 0.25s ease;
+        }
+
+        .project-image-toggle.active svg {
+            transform: rotate(180deg);
+        }
+
+        .project-cover-img {
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        #projects .glass-card > .h-56 > *:not(.project-cover-img) {
+            pointer-events: none;
+        }
+
+        #projects.image-mode .glass-card > .h-56 h4 {
+            opacity: 0;
+        }
+
+        #projects.image-mode .glass-card .project-cover-img {
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 20;
+            cursor: zoom-in;
+        }
+
+        #image-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 60;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 2rem;
+        }
+
+        #image-modal.active {
+            display: flex;
+        }
+
+        #image-modal .modal-card {
+            position: relative;
+            width: min(95vw, 900px);
+            max-height: min(90vh, 1000px);
+            overflow: hidden;
+            border-radius: 1.5rem;
+            background: rgba(15, 23, 42, 0.95);
+            box-shadow: 0 40px 120px rgba(0, 0, 0, 0.55);
+        }
+
+        #image-modal img {
+            width: 100%;
+            height: auto;
+            display: block;
+            max-height: 90vh;
+            object-fit: contain;
+            background: #0f172a;
+        }
+
+        #image-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 2.75rem;
+            height: 2.75rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #f8fafc;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        #image-modal-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+
         @keyframes shine {
             to {
                 background-position: 200% center;
@@ -537,14 +642,24 @@
     <section id="projects" class="py-32 px-6 max-w-7xl mx-auto relative z-10">
         <div class="flex items-center gap-4 mb-16 reveal">
             <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight text-white">Selected Work</h2>
-            <div class="h-[1px] flex-grow bg-gradient-to-r from-white/20 to-transparent"></div>
+            <div class="h-[1px] flex-1 bg-gradient-to-r from-white/20 to-transparent"></div>
+            <button id="project-image-toggle" type="button" class="project-image-toggle" aria-pressed="false" aria-label="Toggle project image view">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="5" width="18" height="14" rx="2" ry="2" />
+                    <circle cx="8.5" cy="10.5" r="1.5" />
+                    <path d="M21 15l-5-5L3 19" />
+                </svg>
+            </button>
         </div>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
             <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 0ms">
                 <div class="h-56 bg-gradient-to-br from-blue-500/20 to-sky-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <img src="assets/mixinmenu.jpg" alt="MixinMenu screenshot" class="project-cover-img absolute inset-0 w-full h-full object-cover" />
                     <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
+                    <div class="absolute inset-0 bg-slate-950/20"></div>
+                    <div class="absolute inset-0 bg-gradient-to-tr from-slate-950/20 to-transparent"></div>
                     <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
                     <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">MM</h4>
                 </div>
@@ -556,7 +671,7 @@
                             <span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Laravel</span><span class="text-xs font-medium text-slate-300 bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg">Vue.js</span>
                         </div>
                         
-                        <a href="https://mixinmenu.com" target="_blank" class="text-slate-300 bg-white/5 border border-white/10 p-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300 group-hover:scale-110" aria-label="Visit MixinMenu">
+                        <a href="https://mixinmenu.demomixin.my.id" target="_blank" class="text-slate-300 bg-white/5 border border-white/10 p-2.5 rounded-full hover:bg-white hover:text-black transition-all duration-300 group-hover:scale-110" aria-label="Visit MixinMenu">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </a>
         
@@ -566,6 +681,7 @@
     
             <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 100ms">
                 <div class="h-56 bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <img src="assets/mixkatalog.png" alt="Katalog Mixinlabs screenshot" class="project-cover-img absolute inset-0 w-full h-full object-cover" />
                     <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
                     <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
                     <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">KM</h4>
@@ -588,6 +704,7 @@
     
             <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 200ms">
                 <div class="h-56 bg-gradient-to-br from-orange-500/20 to-red-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <img src="assets/affiliate.png" alt="Mixinlabs Affiliate screenshot" class="project-cover-img absolute inset-0 w-full h-full object-cover" />
                     <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
                     <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
                     <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">AF</h4>
@@ -610,6 +727,7 @@
     
             <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 0ms">
                 <div class="h-56 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <img src="assets/demo-lapangan.png" alt="Demo Sewa Lapangan screenshot" class="project-cover-img absolute inset-0 w-full h-full object-cover" />
                     <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
                     <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
                     <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">SL</h4>
@@ -632,6 +750,7 @@
     
             <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 100ms">
                 <div class="h-56 bg-gradient-to-br from-amber-500/20 to-orange-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <img src="assets/fitgym.png" alt="FitGym AI screenshot" class="project-cover-img absolute inset-0 w-full h-full object-cover" />
                     <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
                     <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
                     <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">FG</h4>
@@ -654,6 +773,7 @@
     
             <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 200ms">
                 <div class="h-56 bg-gradient-to-br from-yellow-500/20 to-amber-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <img src="assets/s-class.png" alt="S-Class Binus screenshot" class="project-cover-img absolute inset-0 w-full h-full object-cover" />
                     <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
                     <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
                     <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">SC</h4>
@@ -676,6 +796,7 @@
     
             <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 0ms">
                 <div class="h-56 bg-gradient-to-br from-teal-500/20 to-cyan-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <img src="assets/penjadwalan.png" alt="Sistem Penjadwalan screenshot" class="project-cover-img absolute inset-0 w-full h-full object-cover" />
                     <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
                     <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
                     <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">SP</h4>
@@ -694,6 +815,7 @@
     
             <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 100ms">
                 <div class="h-56 bg-gradient-to-br from-lime-500/20 to-emerald-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <img src="assets/softwarehouse.png" alt="Software House PM screenshot" class="project-cover-img absolute inset-0 w-full h-full object-cover" />
                     <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
                     <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
                     <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">PM</h4>
@@ -712,6 +834,7 @@
     
             <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 200ms">
                 <div class="h-56 bg-gradient-to-br from-sky-500/20 to-blue-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <img src="assets/kasir.png" alt="Aplikasi Kasir screenshot" class="project-cover-img absolute inset-0 w-full h-full object-cover" />
                     <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
                     <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
                     <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">AK</h4>
@@ -730,6 +853,7 @@
     
             <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 0ms">
                 <div class="h-56 bg-gradient-to-br from-green-500/20 to-emerald-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <img src="assets/backend-ecommerce.png" alt="Backend Ecommerce screenshot" class="project-cover-img absolute inset-0 w-full h-full object-cover" />
                     <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
                     <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
                     <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">BE</h4>
@@ -748,6 +872,7 @@
     
             <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 100ms">
                 <div class="h-56 bg-gradient-to-br from-rose-500/20 to-red-500/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <img src="assets/dashboard-komik.png" alt="Dashboard Komik screenshot" class="project-cover-img absolute inset-0 w-full h-full object-cover" />
                     <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
                     <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
                     <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">DK</h4>
@@ -766,6 +891,7 @@
     
             <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 200ms">
                 <div class="h-56 bg-gradient-to-br from-orange-400/20 to-orange-600/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <img src="assets/bslc-cms.png" alt="BSLC CMS screenshot" class="project-cover-img absolute inset-0 w-full h-full object-cover" />
                     <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
                     <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
                     <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">BC</h4>
@@ -788,6 +914,7 @@
     
             <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 0ms">
                 <div class="h-56 bg-gradient-to-br from-blue-400/20 to-cyan-600/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <img src="assets/bslc-elearning.png" alt="BSLC Elearning screenshot" class="project-cover-img absolute inset-0 w-full h-full object-cover" />
                     <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
                     <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
                     <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">EL</h4>
@@ -810,6 +937,7 @@
     
             <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 100ms">
                 <div class="h-56 bg-gradient-to-br from-teal-400/20 to-emerald-600/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <img src="assets/bslc-landing.png" alt="BSLC Landing Page screenshot" class="project-cover-img absolute inset-0 w-full h-full object-cover" />
                     <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
                     <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
                     <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">BL</h4>
@@ -832,6 +960,7 @@
     
             <div class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal hover:-translate-y-2 transition-all duration-500" style="transition-delay: 200ms">
                 <div class="h-56 bg-gradient-to-br from-rose-400/20 to-orange-600/20 border-b border-white/5 flex items-center justify-center relative overflow-hidden">
+                    <img src="assets/bslc-nindyamaya.png" alt="BSLC Nindyamaya screenshot" class="project-cover-img absolute inset-0 w-full h-full object-cover" />
                     <div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-30"></div>
                     <div class="absolute w-32 h-32 bg-white/20 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-700"></div>
                     <h4 class="font-display text-6xl font-black text-white/40 tracking-tighter select-none group-hover:text-white/60 group-hover:scale-110 transition-all duration-500 drop-shadow-xl z-10">NM</h4>
@@ -986,6 +1115,15 @@
         </div>
     </footer>
 
+    <div id="image-modal" aria-hidden="true">
+        <div class="modal-card">
+            <button id="image-modal-close" aria-label="Close image preview">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M6 18L18 6"/></svg>
+            </button>
+            <img id="image-modal-img" src="" alt="Project screenshot preview" />
+        </div>
+    </div>
+
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -1004,6 +1142,64 @@
             }
         };
         setTimeout(typeWriter, 1000);
+
+        // Project image toggle
+        const projectToggle = document.getElementById('project-image-toggle');
+        const projectSection = document.getElementById('projects');
+        const projectCovers = document.querySelectorAll('#projects .glass-card > .h-56');
+        const coverImage = 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%221200%22 height=%22700%22%3E%3Cdefs%3E%3ClinearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22%3E%3Cstop offset=%220%22 stop-color=%22%2338bdf8%22/%3E%3Cstop offset=%221%22 stop-color=%22%23096bff%22/%3E%3C/linearGradient%3E%3Cfilter id=%22blur%22%3E%3CfeGaussianBlur stdDeviation=%2240%22/%3E%3C/filter%3E%3C/defs%3E%3Crect width=%22100%25%22 height=%22100%25%22 fill=%22url(%23g)%22/%3E%3Ccircle cx=%22380%22 cy=%22240%22 r=%22180%22 fill=%22%23ffffff%22 fill-opacity=%220.15%22 filter=%22url(%23blur)%22/%3E%3Ccircle cx=%22860%22 cy=%22420%22 r=%22120%22 fill=%22%23ffffff%22 fill-opacity=%220.12%22 filter=%22url(%23blur)%22/%3E%3Cpath d=%22M200 520 C320 420 520 620 640 520%22 stroke=%22%23ffffff%22 stroke-opacity=%220.18%22 stroke-width=%2242%22 fill=%22none%22/%3E%3C/svg%3E';
+
+        const updateProjectMode = (enabled) => {
+            projectSection.classList.toggle('image-mode', enabled);
+            projectToggle.setAttribute('aria-pressed', enabled.toString());
+            projectToggle.setAttribute('aria-label', enabled ? 'Show initials' : 'Show images');
+            projectToggle.classList.toggle('active', enabled);
+
+            projectCovers.forEach(cover => {
+                if (enabled) {
+                    cover.style.backgroundImage = `url("${coverImage}")`;
+                    cover.style.backgroundSize = 'cover';
+                    cover.style.backgroundPosition = 'center';
+                    cover.style.backgroundRepeat = 'no-repeat';
+                } else {
+                    cover.style.backgroundImage = '';
+                }
+            });
+        };
+
+        projectToggle.addEventListener('click', () => {
+            updateProjectMode(projectSection.classList.toggle('image-mode'));
+        });
+
+        const imageModal = document.getElementById('image-modal');
+        const imageModalImg = document.getElementById('image-modal-img');
+        const imageModalClose = document.getElementById('image-modal-close');
+
+        document.querySelectorAll('#projects .project-cover-img').forEach(img => {
+            img.addEventListener('click', event => {
+                if (!projectSection.classList.contains('image-mode')) return;
+                imageModalImg.src = event.currentTarget.src;
+                imageModalImg.alt = event.currentTarget.alt || 'Project screenshot preview';
+                imageModal.classList.add('active');
+                imageModal.setAttribute('aria-hidden', 'false');
+            });
+        });
+
+        const closeModal = () => {
+            imageModal.classList.remove('active');
+            imageModal.setAttribute('aria-hidden', 'true');
+            imageModalImg.src = '';
+        };
+
+        imageModalClose.addEventListener('click', closeModal);
+        imageModal.addEventListener('click', event => {
+            if (event.target === imageModal) closeModal();
+        });
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && imageModal.classList.contains('active')) {
+                closeModal();
+            }
+        });
 
         // Fetch Medium Articles
         fetch('https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@wikolaygunata')
