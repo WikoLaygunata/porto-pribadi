@@ -1337,17 +1337,26 @@
             <h2 class="font-display text-4xl md:text-5xl font-bold tracking-tight text-white">Latest Writings</h2>
             <div class="h-[1px] flex-grow bg-gradient-to-r from-white/20 to-transparent"></div>
         </div>
-        
-        <div id="medium-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Loading Skeleton -->
-            <div class="glass-card h-80 rounded-3xl animate-pulse"></div>
-            <div class="glass-card h-80 rounded-3xl animate-pulse hidden md:block"></div>
-            <div class="glass-card h-80 rounded-3xl animate-pulse hidden md:block"></div>
-        </div>
-        <div class="mt-12 text-center reveal">
-            <a href="https://wikolaygunata.medium.com/" target="_blank" class="inline-flex items-center gap-2 text-slate-400 hover:text-white transition-colors bg-white/5 border border-white/10 px-6 py-3 rounded-xl hover:bg-white/10">
-                Read more on Medium <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-            </a>
+        <div class="glass-card rounded-3xl p-8 md:p-12 reveal relative overflow-hidden">
+            <div class="absolute -top-24 -right-16 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="relative grid md:grid-cols-[1fr_auto] gap-10 items-center">
+                <div>
+                    <p class="text-sm font-mono uppercase tracking-[0.2em] text-blue-400 mb-4">Little notes from life</p>
+                    <h3 class="font-display text-2xl md:text-3xl font-semibold text-white mb-4">A place for thoughts along the way.</h3>
+                    <p class="text-slate-400 font-light leading-relaxed max-w-2xl mb-7">
+                        Catatan random tentang kehidupan, cerita sehari-hari, dan hal-hal kecil yang kadang terasa berarti.
+                    </p>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-3 py-1.5 rounded-full text-xs text-slate-300 bg-white/5 border border-white/10">Everyday stories</span>
+                        <span class="px-3 py-1.5 rounded-full text-xs text-slate-300 bg-white/5 border border-white/10">Personal reflections</span>
+                        <span class="px-3 py-1.5 rounded-full text-xs text-slate-300 bg-white/5 border border-white/10">Life, as it happens</span>
+                    </div>
+                </div>
+                <a href="https://wikolaygunata.medium.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 bg-white text-slate-950 px-6 py-3.5 rounded-xl font-medium hover:bg-slate-200 transition-colors whitespace-nowrap">
+                    Read on Medium
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M7 7h10v10"/></svg>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -1484,60 +1493,6 @@
                 closeModal();
             }
         });
-
-        // Fetch Medium Articles
-        fetch('https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@wikolaygunata')
-            .then(res => res.json())
-            .then(data => {
-                const container = document.getElementById('medium-container');
-                container.innerHTML = '';
-                
-                if (data.status === 'ok' && data.items.length > 0) {
-                    const articles = data.items.slice(0, 3);
-                    articles.forEach((item, index) => {
-                        const delay = index * 100;
-                        const pubDate = new Date(item.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-                        
-                        // Extract first valid image, avoiding Medium's 1x1 tracking pixel
-                        let img = item.thumbnail;
-                        if (!img || img.includes('stat?')) {
-                            const match = item.description.match(/<img[^>]+src="([^">]+)"/);
-                            img = (match && !match[1].includes('stat?')) ? match[1] : null;
-                        }
-                        
-                        const gradients = ['from-blue-600 to-cyan-400', 'from-emerald-500 to-teal-400', 'from-amber-500 to-orange-500'];
-                        const bgGradient = gradients[index % gradients.length];
-                        const fallbackLetter = item.title.charAt(0).toUpperCase();
-                        
-                        const visualHtml = img 
-                            ? `<img src="${img}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.outerHTML='<div class=\\'w-full h-full bg-gradient-to-br ${bgGradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-700 relative\\'><span class=\\'font-display text-6xl font-black text-white/30\\'>${fallbackLetter}</span></div>'">`
-                            : `<div class="w-full h-full bg-gradient-to-br ${bgGradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-700 relative"><div class="absolute inset-0 pattern-grid mix-blend-overlay opacity-20"></div><span class="font-display text-7xl font-black text-white/40 drop-shadow-xl">${fallbackLetter}</span></div>`;
-
-                        container.innerHTML += `
-                            <a href="${item.link}" target="_blank" class="glass-card group flex flex-col rounded-3xl overflow-hidden reveal active hover:-translate-y-2 transition-all duration-500" style="transition-delay: ${delay}ms">
-                                <div class="h-48 bg-slate-800 overflow-hidden relative border-b border-white/5">
-                                    ${visualHtml}
-                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-80"></div>
-                                </div>
-                                <div class="p-6 flex-grow flex flex-col relative bg-slate-900/50">
-                                    <div class="text-xs text-blue-400 mb-3 font-mono border border-blue-400/20 bg-blue-400/10 w-fit px-2 py-1 rounded">${pubDate}</div>
-                                    <h3 class="font-display text-xl font-semibold mb-3 text-white group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">${item.title}</h3>
-                                    <div class="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
-                                        <span class="text-sm font-medium text-slate-300 group-hover:text-white transition-colors">Read Article</span>
-                                        <svg class="w-5 h-5 text-slate-500 group-hover:text-white transition-all group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-                                    </div>
-                                </div>
-                            </a>
-                        `;
-                    });
-                } else {
-                    container.innerHTML = '<div class="col-span-3 text-center text-slate-500 py-10">Belum ada artikel terbaru.</div>';
-                }
-            })
-            .catch(err => {
-                const container = document.getElementById('medium-container');
-                container.innerHTML = '<div class="col-span-3 text-center text-slate-500 py-10">Gagal memuat artikel Medium saat ini.</div>';
-            });
 
         // Mobile Menu
         const btn = document.getElementById('mobile-menu-btn');
